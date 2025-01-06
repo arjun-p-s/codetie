@@ -2,12 +2,24 @@ const express = require('express');
 
 const app = express();
 
-app.use("/test",(req,res)=>{
-    res.send("helo there")
+
+
+app.get("/user",(req,res)=>{
+    res.send({firstname:"Arjun", age:"22"})
 
 });
-app.use("/hai",(req,res)=>{
-    res.send("helo mone")
+
+
+app.delete("/user",(req,res)=>{
+    res.send("deleted successfully")
+
+});
+app.post("/user",(req,res)=>{
+    res.send("data saved")
+
+});
+app.use("/user",(req,res)=>{
+    res.send("surprice")
 
 });
 
