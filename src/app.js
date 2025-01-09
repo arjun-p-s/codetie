@@ -1,28 +1,26 @@
-const express = require('express');
-
+const express = require("express");
 const app = express();
+const { dbConnect } = require("./config/database");
+const User = require("./config/models/user");
 
-
-
-app.get("/user",(req,res)=>{
-    res.send({firstname:"Arjun", age:"22"})
-
+app.post("/signup", async (req, res) => {
+  const user = new User({
+    firstName: "Arjun ",
+    LastName: "Susheelan",
+    age: "22",
+    phnno: "123452637",
+  });
+  await user.save();
+  res.send("User added successfully");
 });
 
-
-app.delete("/user",(req,res)=>{
-    res.send("deleted successfully")
-
-});
-app.post("/user",(req,res)=>{
-    res.send("data saved")
-
-});
-app.use("/user",(req,res)=>{
-    res.send("surprice")
-
-});
-
-app.listen(3000,()=>{
-    console.log("server is running in port 3000")
-});
+dbConnect()
+  .then(() => {
+    console.log("database connected successfully...");
+    app.listen(3000, () => {
+      console.log("server is running in port 3000");
+    });
+  })
+  .catch((err) => {
+    console.error("Database connection failed: ", err.message);
+  });
