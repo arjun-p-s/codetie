@@ -8,17 +8,7 @@ app.use(express.json());
 
 app.post("/signup", async (req, res) => {
   try {
-    const user = new User({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      password: req.body.password,
-      age: req.body.age,
-      gender: req.body.gender,
-      photourl: req.body.photourl,
-      about: req.body.about,
-      skills: req.body.about,
-    });
+    const user = new User(req.body)
 
     await user.save();
     res.send("User added successfully");
@@ -70,12 +60,27 @@ app.delete("/user", async (req, res) => {
 });
 app.patch("/user", async (req, res) => {
   const data = req.body;
+
+  const ALLOWED_UPDATES = ["_id", "about", "skills", "gender", "age","photourl"];
   try {
-    const user = await User.findByIdAndUpdate(req.body._id, data);
+    const isAllowed = Object.keys(data).every((k) =>
+      ALLOWED_UPDATES.includes(k)
+    );
+    if (!isAllowed) {
+      throw new Error("Updation is not allowed ");
+    }
+    if (data?.skills?.length > 10) {
+      throw new Error("skills must be under 10");
+    }
+    const user = await User.findByIdAndUpdate(req.body._id, data, {
+      returnDocument: "after",
+      runValidators: true,
+    });
+
     res.send("updated successfully");
     console.log(user);
   } catch (err) {
-    res.status(400).send(err.message);
+    res.status(400).send("UPDATE FAILED : " + err.message);
   }
 });
 
