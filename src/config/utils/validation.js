@@ -15,11 +15,11 @@ const signupValidateData = (req) => {
 const editedValidateData = (req) => {
   const allowedUpdates = [
     "firstName",
-    "secondName",
+    "lastName",
     "age",
     "about",
     "gender",
-    "skills",
+    "photourl",
   ];
   const isEditAllowed = Object.keys(req.body).every((field) =>
     allowedUpdates.includes(field)

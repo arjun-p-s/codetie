@@ -42,31 +42,31 @@ authRouter.post("/signup", async (req, res) => {
 
 authRouter.post("/login", async (req, res) => {
   const { email, password } = req.body;
+
   try {
     if (!validator.isEmail(email)) {
       throw new Error("Email id is not valid");
     }
     const user = await User.findOne({ email: email });
     if (!user) {
-      throw new Error("Email id is not present");
+      return res.status(404).send(" Incorrect Email Id or Password ");
     }
 
     const isPasswordCorrect = await user.validatePassword(password);
 
     if (isPasswordCorrect) {
       const token = await user.getJWT();
-      res.cookie(
-        "token",
-        token,
-        { httpOnly: true, secure: true },
-        { expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) }
-      );
-      res.send("Login successfull");
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      });
+      res.send(user);
     } else {
-      throw new Error("Password is not correct");
+      return res.status(404).send(" Incorrect Email Id or Password ");
     }
   } catch (err) {
-    res.status(400).send("Error: " + err.message);
+    res.status(400).json({ error: err.message });
   }
 });
 authRouter.post("/logout", async (req, res) => {

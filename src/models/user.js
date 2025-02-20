@@ -40,8 +40,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     validate(value) {
       if (!["male", "female", "others"].includes(value)) {
-        throw new Error("gender is not defined");
-      }
+        throw new Error("Invalid gender value");      }
     },
   },
   photourl: {

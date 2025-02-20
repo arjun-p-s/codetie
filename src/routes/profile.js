@@ -10,7 +10,7 @@ authProfile.get("/profile/view", userAuth, async (req, res) => {
     const user = req.user;
     res.send(user);
   } catch (err) {
-    res.status(400).send(err.message);
+    res.status(400).json({ ERROR: err.message });
   }
 });
 authProfile.patch("/profile/edit", userAuth, async (req, res) => {
@@ -20,10 +20,10 @@ authProfile.patch("/profile/edit", userAuth, async (req, res) => {
     }
     const loggedInUser = req.user;
     Object.keys(req.body).forEach((key) => (loggedInUser[key] = req.body[key]));
-    loggedInUser.save();
-    res.json({ message: "User updated successfull" });
+    await loggedInUser.save();
+    res.json({ message: "User updated successfull", data: loggedInUser });
   } catch (err) {
-    res.status(400).send("Error :" + err.message);
+    res.status(400).json({ ERROR: err.message });
   }
 });
 
@@ -39,7 +39,7 @@ authProfile.patch("/password/update", userAuth, async (req, res) => {
     await req.user.save();
     res.send("password Updated Successfully");
   } catch (err) {
-    res.status(400).send("ERROR: " + err.message);
+    res.status(400).json({ ERROR: err.message });
   }
 });
 
