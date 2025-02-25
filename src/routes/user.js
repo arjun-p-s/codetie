@@ -15,7 +15,7 @@ userRouter.get("/user/request/received", userAuth, async (req, res) => {
         toUserId: loggedInUser._id,
         status: "interested",
       })
-      .populate("fromUserId", "firstName  lastName  about skills");
+      .populate("fromUserId", "firstName  lastName  about skills photourl gender age");
     if (connectionRequest.length === 0) {
       return res.json({ message: "no requests recieved" });
     }
