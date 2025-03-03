@@ -26,5 +26,8 @@
     "mongoos": "^0.0.1-security",
     "mongoose": "^8.9.3",
     "validator": "^13.12.0"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0"
   }
 }
