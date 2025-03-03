@@ -40,11 +40,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     validate(value) {
       if (!["male", "female", "others"].includes(value)) {
-        throw new Error("Invalid gender value");      }
+        throw new Error("Invalid gender value");
+      }
     },
   },
   photourl: {
     type: String,
+    default:
+      "https://media.istockphoto.com/id/1341046662/vector/picture-profile-icon-human-or-people-sign-and-symbol-for-template-design.jpg?s=612x612&w=0&k=20&c=A7z3OK0fElK3tFntKObma-3a7PyO8_2xxW0jtmjzT78=",
     validate(value) {
       if (!validator.isURL(value)) {
         throw new Error("photo url is not valid : " + value);
@@ -61,7 +64,7 @@ const userSchema = new mongoose.Schema({
 });
 userSchema.methods.getJWT = async function () {
   const user = this;
-  const token = await jwt.sign({ userId: user._id }, "your_secret_key", {
+  const token = await jwt.sign({ userId: user._id }, "Shared_secrets_codeTie", {
     expiresIn: "7d",
   });
   return token;

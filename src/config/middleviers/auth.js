@@ -2,13 +2,12 @@ const jwt = require("jsonwebtoken");
 const User = require("../../models/user");
 
 const userAuth = async (req, res, next) => {
-  console.log(req.cookies)
   try {
     const { token } = req.cookies;
     if (!token) {
       return res.status(401).send("please login")
     }
-    const decodedMessage = jwt.verify(token, "your_secret_key");
+    const decodedMessage = jwt.verify(token, "Shared_secrets_codeTie");
     const { userId } = decodedMessage;
     const user = await User.findById(userId);
 
