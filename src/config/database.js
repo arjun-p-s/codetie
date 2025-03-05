@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
  const  dbConnect= async()=> {
-   await  mongoose.connect('mongodb+srv://arjunps:micronode@nodedev.g64vz.mongodb.net/codetie')
+   await  mongoose.connect(process.env.MONGO_URI)
 }
 
 

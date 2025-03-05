@@ -29,7 +29,7 @@ app.use("/", userRouter);
 dbConnect()
   .then(() => {
     console.log("database connected successfully...");
-    app.listen(5000, () => {
+    app.listen(process.env.PORT, () => {
       console.log("server is running in port 5000");
     });
   })
