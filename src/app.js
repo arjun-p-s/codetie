@@ -9,6 +9,7 @@ const authProfile = require("../src/routes/profile");
 const authRequest = require("./routes/request");
 const userRouter = require("./routes/user");
 const cors = require("cors");
+require('dotenv').config()
 
 app.use(
   cors({
