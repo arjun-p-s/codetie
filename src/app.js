@@ -14,7 +14,7 @@ require('dotenv').config()
 app.use(
   cors({
     
-    origin: "https://codetie-1.onrender.com",
+    origin: "http://localhost:5173",
     credentials: true,
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
