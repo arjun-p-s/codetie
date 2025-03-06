@@ -9,12 +9,16 @@ const authProfile = require("../src/routes/profile");
 const authRequest = require("./routes/request");
 const userRouter = require("./routes/user");
 const cors = require("cors");
-require('dotenv').config()
+require("dotenv").config();
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://codetie-1.onrender.com",
+];
 
 app.use(
   cors({
-    
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     credentials: true,
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
