@@ -2,6 +2,7 @@ const express = require("express");
 const { userAuth } = require("../config/middleviers/auth");
 const connectionRequestModel = require("../models/connectionRequest");
 const User = require("../models/user");
+const sendEmail = require("../config/utils/sendEmail");
 
 const authRequest = express.Router();
 
@@ -45,6 +46,9 @@ authRequest.post(
         status,
       });
       const data = await connectionRequest.save();
+      const emailResponse = await sendEmail();
+      console.log(emailResponse);
+
       res.json({ message: "Connection request sended successfully", data });
     } catch (err) {
       res.status(400).json({ error: err.message });

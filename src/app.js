@@ -10,6 +10,8 @@ const authRequest = require("./routes/request");
 const userRouter = require("./routes/user");
 const cors = require("cors");
 require("dotenv").config();
+const http = require("http");
+const initializeSocket = require("./config/utils/socket");
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -32,10 +34,13 @@ app.use("/", authProfile);
 app.use("/", authRequest);
 app.use("/", userRouter);
 
+const server = http.createServer(app);
+initializeSocket(server);
+
 dbConnect()
   .then(() => {
     console.log("database connected successfully...");
-    app.listen(process.env.PORT, () => {
+    server.listen(process.env.PORT, () => {
       console.log("server is running in port 5000");
     });
   })
