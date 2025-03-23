@@ -7,7 +7,11 @@ const initializeSocket = (server) => {
     },
   });
 
-  io.on("connection", (Socket) => {});
+  io.on("connection", (Socket) => {
+    Socket.on("joinchat", (userId, targetUserId) => {});
+    Socket.on("sendMessage", () => {});
+    Socket.on("disconnect", () => {});
+  });
 };
 
 module.exports = initializeSocket;
