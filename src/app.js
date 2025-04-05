@@ -12,6 +12,7 @@ const cors = require("cors");
 require("dotenv").config();
 const http = require("http");
 const initializeSocket = require("./config/utils/socket");
+const chatRouter = require("./routes/chat");
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -33,6 +34,7 @@ app.use("/", authRouter);
 app.use("/", authProfile);
 app.use("/", authRequest);
 app.use("/", userRouter);
+app.use("/", chatRouter);
 
 const server = http.createServer(app);
 initializeSocket(server);

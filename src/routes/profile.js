@@ -3,6 +3,7 @@ const { userAuth } = require("../config/middleviers/auth");
 const { editedValidateData } = require("../config/utils/validation");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const user = require("../models/user");
 
 const authProfile = express.Router();
 authProfile.get("/profile/view", userAuth, async (req, res) => {
@@ -43,4 +44,17 @@ authProfile.patch("/password/update", userAuth, async (req, res) => {
   }
 });
 
+authProfile.get("/profile/view/:targetUserId", userAuth, async (req, res) => {
+  try {
+    const targetUserId = req.params.targetUserId;
+    if (!targetUserId) {
+      return;
+    }
+
+    const userData = await user.findById(targetUserId);
+    res.json({ userData });
+  } catch (err) {
+    res.json({ error: err.message });
+  }
+});
 module.exports = authProfile;
